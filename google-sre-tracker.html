@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRE Journey - Google Prep</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+        }
+
+        .hero-title {
+            font-size: 6rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #999;
+            margin-bottom: 60px;
+        }
+
+        .progress-circle {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .progress-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            font-weight: 200;
+            color: #d5001c;
+        }
+
+        .day-indicator {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #666;
+            letter-spacing: 0.1em;
+        }
+
+        /* Stats Grid */
+        .stats-section {
+            padding: 100px 5%;
+            background: #000;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2px;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #222;
+        }
+
+        .stat-card {
+            background: #000;
+            padding: 60px 40px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            background: #111;
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .stat-value {
+            font-size: 4rem;
+            font-weight: 200;
+            color: #d5001c;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 30px;
+        }
+
+        .stat-detail {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .add-btn {
+            background: transparent;
+            border: 1px solid #d5001c;
+            color: #d5001c;
+            padding: 12px 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+        }
+
+        .add-btn:hover {
+            background: #d5001c;
+            color: #fff;
+        }
+
+        /* Timer Section */
+        .timer-section {
+            padding: 100px 5%;
+            background: #0a0a0a;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 200;
+            margin-bottom: 60px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .timer-display {
+            font-size: 8rem;
+            font-weight: 100;
+            color: #d5001c;
+            margin: 60px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn-primary {
+            background: #d5001c;
+            color: #fff;
+            border: none;
+            padding: 18px 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            background: #b30019;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #666;
+            color: #999;
+            padding: 18px 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .timer-stats {
+            margin-top: 60px;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .timer-stats strong {
+            color: #d5001c;
+            font-weight: 400;
+        }
+
+        /* Progress Bars */
+        .progress-section {
+            padding: 100px 5%;
+            background: #000;
+        }
+
+        .progress-item {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .progress-name {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+
+        .progress-value {
+            font-size: 1.2rem;
+            color: #d5001c;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: #222;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #d5001c;
+            transition: width 0.5s ease;
+        }
+
+        .sub-progress {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .sub-item {
+            text-align: center;
+        }
+
+        .sub-name {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .sub-value {
+            font-size: 1.5rem;
+            color: #999;
+        }
+
+        /* Input Section */
+        .input-section {
+            padding: 100px 5%;
+            background: #0a0a0a;
+        }
+
+        .input-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #333;
+            padding: 20px 0;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        input:focus {
+            outline: none;
+            border-bottom-color: #d5001c;
+        }
+
+        input::placeholder {
+            color: #444;
+        }
+
+        footer {
+            padding: 60px 5%;
+            text-align: center;
+            color: #444;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            .timer-display {
+                font-size: 5rem;
+            }
+            .stat-value {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-title">SRE JOURNEY</div>
+        <div class="hero-subtitle">Google Site Reliability Engineer</div>
+        
+        <div class="progress-circle">
+            <svg width="300" height="300">
+                <circle cx="150" cy="150" r="140" fill="none" stroke="#222" stroke-width="2"/>
+                <circle id="progressCircle" cx="150" cy="150" r="140" fill="none" stroke="#d5001c" stroke-width="2" 
+                        stroke-dasharray="879.6" stroke-dashoffset="879.6" transform="rotate(-90 150 150)"/>
+            </svg>
+            <div class="progress-number" id="overallProgress">0%</div>
+        </div>
+        
+        <div class="day-indicator">DAY <span id="currentDay">1</span> / 30</div>
+    </section>
+
+    <!-- Timer Section -->
+    <section class="timer-section">
+        <div class="section-title">Focus Timer</div>
+        <div style="color: #666; margin-bottom: 40px;">50 MINUTES DEEP WORK • 10 MINUTES REST</div>
+        
+        <div class="timer-display" id="timerDisplay">50:00</div>
+        
+        <div class="timer-controls">
+            <button class="btn-primary" id="startBtn">START</button>
+            <button class="btn-secondary" id="pauseBtn" style="display: none;">PAUSE</button>
+            <button class="btn-secondary" id="resetBtn">RESET</button>
+        </div>
+        
+        <div class="timer-stats">
+            <p>SESSIONS TODAY: <strong id="sessionsToday">0</strong></p>
+            <p style="margin-top: 15px;">TOTAL TIME: <strong id="totalTime">0h 0m</strong></p>
+        </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <!-- Coding -->
+            <div class="stat-card">
+                <div class="stat-icon">💻</div>
+                <div class="stat-value" id="codingPercent">0%</div>
+                <div class="stat-label">Coding</div>
+                <div class="stat-detail">
+                    <div id="problemsTotal">0</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">/ 170 PROBLEMS</div>
+                </div>
+                <button class="add-btn" onclick="quickAdd('coding')">ADD PROBLEM</button>
+            </div>
+
+            <!-- Networking -->
+            <div class="stat-card">
+                <div class="stat-icon">🌐</div>
+                <div class="stat-value" id="networkPercent">0%</div>
+                <div class="stat-label">Networking</div>
+                <div class="stat-detail">
+                    <div id="conceptsTotal">0</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">/ 40 CONCEPTS</div>
+                </div>
+                <button class="add-btn" onclick="quickAdd('network')">ADD CONCEPT</button>
+            </div>
+
+            <!-- Hours -->
+            <div class="stat-card">
+                <div class="stat-icon">⏱</div>
+                <div class="stat-value" id="hoursPercent">0%</div>
+                <div class="stat-label">Study Hours</div>
+                <div class="stat-detail">
+                    <div id="hoursTotal">0</div>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">/ 240 HOURS</div>
+                </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="stat-card">
+                <div class="stat-icon">🚀</div>
+                <div class="stat-value"><span id="projectsTotal">0</span>/3</div>
+                <div class="stat-label">Projects</div>
+                <div class="stat-detail">Network Monitor<br>DNS Tool<br>Monitoring Dashboard</div>
+                <button class="add-btn" onclick="addMetric('projects')">COMPLETE PROJECT</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Bars -->
+    <section class="progress-section">
+        <div class="section-title">Performance Metrics</div>
+        
+        <div class="progress-item">
+            <div class="progress-header">
+                <div class="progress-name">CODING PROBLEMS</div>
+                <div class="progress-value"><span id="problemsCount">0</span> / 170</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="codingBar"></div>
+            </div>
+            <div class="sub-progress">
+                <div class="sub-item">
+                    <div class="sub-name">Easy</div>
+                    <div class="sub-value" id="easyCount">0/55</div>
+                </div>
+                <div class="sub-item">
+                    <div class="sub-name">Medium</div>
+                    <div class="sub-value" id="mediumCount">0/105</div>
+                </div>
+                <div class="sub-item">
+                    <div class="sub-name">Hard</div>
+                    <div class="sub-value" id="hardCount">0/10</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-item">
+            <div class="progress-header">
+                <div class="progress-name">NETWORKING CONCEPTS</div>
+                <div class="progress-value"><span id="conceptsCount">0</span> / 40</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="networkBar"></div>
+            </div>
+            <div class="sub-progress">
+                <div class="sub-item">
+                    <div class="sub-name">TCP/IP</div>
+                    <div class="sub-value" id="tcpipCount">0/10</div>
+                </div>
+                <div class="sub-item">
+                    <div class="sub-name">Services</div>
+                    <div class="sub-value" id="servicesCount">0/15</div>
+                </div>
+                <div class="sub-item">
+                    <div class="sub-name">Routing</div>
+                    <div class="sub-value" id="routingCount">0/15</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-item">
+            <div class="progress-header">
+                <div class="progress-name">STUDY HOURS</div>
+                <div class="progress-value"><span id="hoursCount">0</span> / 240</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="hoursBar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Input Section -->
+    <section class="input-section">
+        <div class="section-title">Quick Actions</div>
+        <div class="input-container">
+            <input type="number" id="manualHours" placeholder="LOG STUDY HOURS" step="0.5" min="0" max="24">
+            <button class="btn-primary" style="width: 100%;" onclick="addHours()">LOG HOURS</button>
+            
+            <div style="margin-top: 60px;"></div>
+            <button class="btn-secondary" style="width: 100%; margin-bottom: 20px;" onclick="nextDay()">ADVANCE TO DAY <span id="nextDayNum">2</span> →</button>
+            <button class="btn-secondary" style="width: 100%;" onclick="saveData()">SAVE PROGRESS</button>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 SRE JOURNEY • PERFORMANCE FOCUSED • GOOGLE READY
+    </footer>
+
+    <script>
+        const data = {
+            currentDay: 1,
+            totalHours: 0,
+            pomodoroMinutes: 0,
+            sessionsToday: 0,
+            problems: { easy: 0, medium: 0, hard: 0 },
+            concepts: { tcpip: 0, services: 0, routing: 0 },
+            designs: 0,
+            projects: 0,
+            mocks: 0
+        };
+
+        let timerInterval = null;
+        let timeLeft = 50 * 60;
+        let isBreak = false;
+
+        function init() {
+            loadData();
+            updateUI();
+        }
+
+        function startTimer() {
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('pauseBtn').style.display = 'inline-block';
+            
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    completeSession();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').style.display = 'none';
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = isBreak ? 10 * 60 : 50 * 60;
+            updateTimerDisplay();
+        }
+
+        function completeSession() {
+            clearInterval(timerInterval);
+            
+            if (!isBreak) {
+                data.sessionsToday++;
+                data.pomodoroMinutes += 50;
+                data.totalHours = Math.round((data.pomodoroMinutes / 60) * 10) / 10;
+                alert('SESSION COMPLETE • 10 MINUTE BREAK');
+                isBreak = true;
+                timeLeft = 10 * 60;
+            } else {
+                alert('BREAK COMPLETE • READY FOR NEXT SESSION');
+                isBreak = false;
+                timeLeft = 50 * 60;
+            }
+            
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('pauseBtn').style.display = 'none';
+            updateTimerDisplay();
+            saveData();
+            updateUI();
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function quickAdd(type) {
+            if (type === 'coding') {
+                const choice = prompt('ADD: easy, medium, or hard?');
+                if (choice && data.problems[choice] !== undefined) {
+                    data.problems[choice]++;
+                }
+            } else if (type === 'network') {
+                const choice = prompt('ADD: tcpip, services, or routing?');
+                if (choice && data.concepts[choice] !== undefined) {
+                    data.concepts[choice]++;
+                }
+            }
+            saveData();
+            updateUI();
+        }
+
+        function addMetric(type) {
+            data[type]++;
+            saveData();
+            updateUI();
+        }
+
+        function addHours() {
+            const input = document.getElementById('manualHours');
+            const hours = parseFloat(input.value);
+            if (hours && hours > 0) {
+                data.totalHours += hours;
+                data.pomodoroMinutes = data.totalHours * 60;
+                input.value = '';
+                saveData();
+                updateUI();
+            }
+        }
+
+        function nextDay() {
+            if (data.currentDay < 30) {
+                data.currentDay++;
+                data.sessionsToday = 0;
+                saveData();
+                updateUI();
+            }
+        }
+
+        function updateUI() {
+            // Timer
+            document.getElementById('sessionsToday').textContent = data.sessionsToday;
+            const hours = Math.floor(data.totalHours);
+            const mins = Math.round((data.totalHours - hours) * 60);
+            document.getElementById('totalTime').textContent = `${hours}h ${mins}m`;
+
+            // Coding
+            const totalProbs = data.problems.easy + data.problems.medium + data.problems.hard;
+            const codingPct = Math.min(Math.round((totalProbs / 170) * 100), 100);
+            document.getElementById('codingPercent').textContent = codingPct + '%';
+            document.getElementById('problemsTotal').textContent = totalProbs;
+            document.getElementById('problemsCount').textContent = totalProbs;
+            document.getElementById('easyCount').textContent = `${data.problems.easy}/55`;
+            document.getElementById('mediumCount').textContent = `${data.problems.medium}/105`;
+            document.getElementById('hardCount').textContent = `${data.problems.hard}/10`;
+            document.getElementById('codingBar').style.width = codingPct + '%';
+
+            // Networking
+            const totalConcepts = data.concepts.tcpip + data.concepts.services + data.concepts.routing;
+            const networkPct = Math.min(Math.round((totalConcepts / 40) * 100), 100);
+            document.getElementById('networkPercent').textContent = networkPct + '%';
+            document.getElementById('conceptsTotal').textContent = totalConcepts;
+            document.getElementById('conceptsCount').textContent = totalConcepts;
+            document.getElementById('tcpipCount').textContent = `${data.concepts.tcpip}/10`;
+            document.getElementById('servicesCount').textContent = `${data.concepts.services}/15`;
+            document.getElementById('routingCount').textContent = `${data.concepts.routing}/15`;
+            document.getElementById('networkBar').style.width = networkPct + '%';
+
+            // Hours
+            const hoursPct = Math.min(Math.round((data.totalHours / 240) * 100), 100);
+            document.getElementById('hoursPercent').textContent = hoursPct + '%';
+            document.getElementById('hoursTotal').textContent = data.totalHours.toFixed(1);
+            document.getElementById('hoursCount').textContent = data.totalHours.toFixed(1);
+            document.getElementById('hoursBar').style.width = hoursPct + '%';
+
+            // Projects
+            document.getElementById('projectsTotal').textContent = data.projects;
+
+            // Overall
+            const overallPct = Math.round(
+                (codingPct * 0.4) + (networkPct * 0.3) + (hoursPct * 0.2) + ((data.projects/3)*100*0.1)
+            );
+            document.getElementById('overallProgress').textContent = overallPct + '%';
+            const circumference = 879.6;
+            const offset = circumference - (overallPct / 100) * circumference;
+            document.getElementById('progressCircle').style.strokeDashoffset = offset;
+
+            // Day
+            document.getElementById('currentDay').textContent = data.currentDay;
+            document.getElementById('nextDayNum').textContent = data.currentDay + 1;
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem('sreData', JSON.stringify(data));
+                alert('PROGRESS SAVED');
+            } catch (e) {
+                console.log('Save not available');
+            }
+        }
+
+        function loadData() {
+            try {
+                const saved = localStorage.getItem('sreData');
+                if (saved) {
+                    Object.assign(data, JSON.parse(saved));
+                }
+            } catch (e) {
+                console.log('Load not available');
+            }
+        }
+
+        document.getElementById('startBtn').onclick = startTimer;
+        document.getElementById('pauseBtn').onclick = pauseTimer;
+        document.getElementById('resetBtn').onclick = resetTimer;
+
+        init();
+    </script>
+</body>
+</html>
